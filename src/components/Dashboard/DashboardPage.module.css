@@ -1,0 +1,142 @@
+.dashboardCharts {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.chartRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.chartRowWideEvo {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.chartRow:has(.chartWide) {
+  grid-template-columns: 1fr;
+}
+
+.chartCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chartCard h3 {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.chartCard canvas {
+  flex: 1;
+  min-height: 0;
+  width: 100% !important;
+}
+
+.chartCardAuto {
+  height: auto;
+  min-height: 200px;
+}
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.kpiCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.kpiCard:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow);
+}
+
+.kpiCard .kpiIcon { font-size: 20px; color: var(--primary); margin-bottom: 2px; }
+.kpiCard .kpiLabel { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-mut); font-weight: 600; }
+.kpiCard .kpiValue { font-size: 22px; font-weight: 800; color: var(--primary); letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1.2; }
+.kpiCard .kpiSub { font-size: 11px; color: var(--text-2); font-weight: 500; line-height: 1.4; }
+.kpiCard.kpiSuccess .kpiValue { color: var(--success-dark); }
+.kpiCard.kpiWarning .kpiValue { color: var(--warning-dark); }
+.kpiCard.kpiDanger .kpiValue { color: var(--danger-dark); }
+
+/* Alert cards */
+.alertSection { margin-bottom: 20px; }
+.alertSection h3 { margin: 0 0 10px; font-size: 13px; font-weight: 700; color: var(--text); text-transform: uppercase; letter-spacing: .05em; }
+.alertGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.alertCard { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border); border-left: 4px solid; box-shadow: var(--shadow-sm); transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
+.alertCard:hover { box-shadow: var(--shadow); }
+.alertCard .material-symbols-rounded { font-size: 22px; flex-shrink: 0; }
+.alertContent { flex: 1; min-width: 0; }
+.alertTitle { font-size: 12px; font-weight: 700; color: var(--text); line-height: 1.3; }
+.alertDesc { font-size: 11px; color: var(--text-2); line-height: 1.3; margin-top: 2px; }
+.alertCritical { border-color: var(--danger); background: var(--danger-tint); }
+.alertCritical .material-symbols-rounded { color: var(--danger-dark); }
+.alertWarning { border-color: var(--warning); background: var(--warning-tint); }
+.alertWarning .material-symbols-rounded { color: var(--warning-dark); }
+.alertInfo { border-color: var(--secondary); background: var(--primary-tint-2); }
+.alertInfo .material-symbols-rounded { color: var(--primary); }
+.alertEmpty { border-color: var(--border); background: var(--surface-2); opacity: .7; }
+.alertEmpty .material-symbols-rounded { color: var(--success); }
+
+/* Tech cards */
+.techCardsGrid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: auto; gap: 12px; flex: 1; }
+.techCard { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 8px; transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease); min-width: 0; }
+.techCard:hover { border-color: var(--border-strong); box-shadow: var(--shadow); }
+.techCardHeader { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.techCardName { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.techCardFunci { font-size: 10px; color: var(--text-mut); font-weight: 500; }
+.techCardAvg { font-size: 22px; font-weight: 800; line-height: 1; letter-spacing: -.02em; }
+.techCardAvg.q1 { color: #065F46; }
+.techCardAvg.q2 { color: #1D4ED8; }
+.techCardAvg.q3 { color: #92400E; }
+.techCardAvg.q4 { color: #991B1B; }
+.techCardAvg.q0 { color: var(--text-mut); }
+.techCardMeta { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-2); font-weight: 500; }
+.techCardBadge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; line-height: 1.4; }
+.techCardBadge.q1 { background: #D1FAE5; color: #065F46; }
+.techCardBadge.q2 { background: #DBEAFE; color: #1E40AF; }
+.techCardBadge.q3 { background: #FEF3C7; color: #92400E; }
+.techCardBadge.q4 { background: #FEE2E2; color: #991B1B; }
+.techCardBadge.q0 { background: var(--surface-3); color: var(--text-mut); }
+.techCardSparkline { height: 32px; width: 100%; }
+.techCardSparkline svg { width: 100%; height: 100%; }
+.techCardProgress { height: 4px; background: var(--surface-3); border-radius: 2px; overflow: hidden; }
+.techCardProgressBar { height: 100%; border-radius: 2px; transition: width .3s var(--ease); }
+.techCardProgressBar.q1 { background: #10B981; }
+.techCardProgressBar.q2 { background: #3B82F6; }
+.techCardProgressBar.q3 { background: #F59E0B; }
+.techCardProgressBar.q4 { background: #EF4444; }
+.techCardProgressBar.q0 { background: var(--text-mut); }
+
+@media (max-width: 640px) {
+  .chartRow { grid-template-columns: 1fr; }
+  .chartRowWideEvo { grid-template-columns: 1fr; }
+  .kpiGrid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  .alertGrid { grid-template-columns: 1fr; }
+  .techCardsGrid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+}

@@ -1,0 +1,72 @@
+.paramsWrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.paramGroup {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.paramGroup h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.paramRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.paramRow label {
+  font-size: 13px;
+  color: var(--text-2);
+  font-weight: 500;
+  min-width: 180px;
+}
+
+.paramDayGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px;
+}
+
+.paramDayRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.paramDayLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  min-width: 70px;
+}
+
+.paramUnit {
+  font-size: 12px;
+  color: var(--text-mut);
+  font-weight: 500;
+}
+
+.paramActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  flex-basis: 100%;
+}
