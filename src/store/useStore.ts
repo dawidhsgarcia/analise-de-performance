@@ -130,6 +130,7 @@ export const useStore = create<AppState & Actions>((set, get) => {
         region.technicians = [...region.technicians, { funci, nome: nome.toUpperCase() }]
         return { regions: { ...state.regions, [state.currentRegion]: region } }
       })
+      get().scheduleSave()
     },
 
     removeTechnician: (funci: string) => {
@@ -138,6 +139,7 @@ export const useStore = create<AppState & Actions>((set, get) => {
         region.technicians = region.technicians.filter((t) => t.funci !== funci)
         return { regions: { ...state.regions, [state.currentRegion]: region } }
       })
+      get().scheduleSave()
     },
 
     setEntry: (funci: string, iso: string, value: number | string | null) => {
@@ -178,7 +180,7 @@ export const useStore = create<AppState & Actions>((set, get) => {
     toggleLock: () => {
       set((state) => {
         const region = { ...state.regions[state.currentRegion] }
-        region.locked = false
+        region.locked = !region.locked
         return { regions: { ...state.regions, [state.currentRegion]: region } }
       })
       get().scheduleSave()
