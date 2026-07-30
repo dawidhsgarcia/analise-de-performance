@@ -3,6 +3,7 @@ import styles from './Header.module.css'
 
 export default function Header() {
   const refreshFromCloud = useStore((s) => s.refreshFromCloud)
+  const toastMessage = useStore((s) => s.toastMessage)
 
   return (
     <header className={styles.header}>
@@ -13,6 +14,9 @@ export default function Header() {
         </div>
       </div>
       <div className={styles.actions}>
+        {toastMessage && (
+          <div className={styles.toast}>{toastMessage}</div>
+        )}
         <div className={styles.saveIndicator} title="Status de sincronização">
           <span className={styles.saveDot} />
           <span>Salvo</span>

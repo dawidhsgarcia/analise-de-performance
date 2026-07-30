@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import type { AppState, Region, Technician } from '@/types'
 import { DEFAULT_PARAMS, STORAGE_KEY } from '@/utils/constants'
 import { loadState, saveToLocal } from '@/services/persistence'
-import { saveToFirestore, loadFromFirestore } from '@/services/firebase'
+import { saveToFirestore } from '@/services/firebase'
 import { periodKey } from '@/utils/dates'
 import { parseWorkbook, applyActivityReport } from '@/services/xlsxParser'
 
@@ -24,6 +24,8 @@ interface Actions {
   scheduleSave: () => void
   loadInitialState: () => Promise<void>
   refreshFromCloud: () => Promise<void>
+  toastMessage: string | null
+  showToast: (msg: string) => void
 }
 
 export interface ImportReportResult {
@@ -68,6 +70,12 @@ export const useStore = create<AppState & Actions>((set, get) => {
 
   return {
     ...seedState(),
+    toastMessage: null as string | null,
+
+    showToast: (msg: string) => {
+      set({ toastMessage: msg })
+      setTimeout(() => set({ toastMessage: null }), 3000)
+    },
 
     setCurrentRegion: (id: string) => set({ currentRegion: id }),
 
@@ -238,9 +246,12 @@ export const useStore = create<AppState & Actions>((set, get) => {
     },
 
     refreshFromCloud: async () => {
-      const fresh = await loadFromFirestore()
+      const fresh = await loadState()
       if (fresh) {
         set(fresh)
+        get().showToast('Dados atualizados da nuvem.')
+      } else {
+        get().showToast('Nenhum dado encontrado na nuvem.')
       }
     },
   }

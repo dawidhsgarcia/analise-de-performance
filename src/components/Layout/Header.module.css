@@ -48,6 +48,23 @@
   gap: 8px;
 }
 
+.toast {
+  padding: 6px 14px;
+  height: 36px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  animation: fadeIn .25s var(--ease);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+
 .saveIndicator {
   display: flex;
   align-items: center;
