@@ -206,6 +206,7 @@ select:focus { outline: none; border-color: var(--primary); box-shadow: var(--ri
 }
 
 .day-cell.weekend { background: var(--weekend); }
+tbody tr:nth-child(even) .day-cell.weekend { background: var(--weekend-2); }
 
 .day-cell input {
   width: 100%;
