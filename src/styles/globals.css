@@ -315,6 +315,9 @@ p.hint.goals-hint { padding: 0 4px; }
   white-space: nowrap;
   vertical-align: middle;
 }
+#goalsTableWrap tbody tr { transition: background var(--dur) var(--ease); }
+#goalsTableWrap tbody tr:nth-child(even) td.col-nome { background: var(--surface-2); }
+#goalsTableWrap tbody tr:hover td { background: var(--primary-tint-2) !important; }
 
 .goal-value { display: block; width: 100%; padding: 8px 2px; font-size: 12px; color: var(--text); text-align: center; font-variant-numeric: tabular-nums; font-weight: 600; }
 .goal-value.pct-good { color: var(--success-dark); font-weight: 800; }
