@@ -14,7 +14,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
-const docRef = doc(db, 'produtividade', 'estado')
+const docRef = doc(db, 'produtividade', 'estado_react_v2')
 
 export async function loadFromFirestore(): Promise<AppState | null> {
   try {
