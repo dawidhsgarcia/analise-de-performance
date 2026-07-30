@@ -315,6 +315,7 @@ p.hint.goals-hint { padding: 0 4px; }
   white-space: nowrap;
   vertical-align: middle;
 }
+#goalsTableWrap thead th.col-nome { background: var(--surface-2); z-index: 5; }
 #goalsTableWrap tbody tr { transition: background var(--dur) var(--ease); }
 #goalsTableWrap tbody tr:nth-child(even) td.col-nome { background: var(--surface-2); }
 #goalsTableWrap tbody tr:hover td { background: var(--primary-tint-2) !important; }
