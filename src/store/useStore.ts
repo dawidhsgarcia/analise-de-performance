@@ -216,6 +216,7 @@ export const useStore = create<AppState & Actions>((set, get) => {
 
     importBackup: (importedState: AppState) => {
       set(importedState)
+      saveToLocal(importedState)
       get().scheduleSave()
     },
 
@@ -232,11 +233,8 @@ export const useStore = create<AppState & Actions>((set, get) => {
           regions: state.regions,
         }
 
-        let saved = false
-        saved = await saveToFirestore(stateObj)
-        if (!saved) {
-          saveToLocal(stateObj)
-        }
+        saveToLocal(stateObj)
+        await saveToFirestore(stateObj)
       }, 400)
     },
 

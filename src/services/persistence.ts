@@ -27,10 +27,14 @@ function migrateLoadedState(parsed: AppState): AppState | null {
 }
 
 export async function loadState(): Promise<AppState | null> {
-  const fromFirestore = await loadFromFirestore()
-  if (fromFirestore) {
-    const migrated = migrateLoadedState(fromFirestore)
-    if (migrated) return migrated
+  try {
+    const fromFirestore = await loadFromFirestore()
+    if (fromFirestore) {
+      const migrated = migrateLoadedState(fromFirestore)
+      if (migrated) return migrated
+    }
+  } catch {
+    /* Firestore unavailable — fall through to localStorage */
   }
 
   try {
