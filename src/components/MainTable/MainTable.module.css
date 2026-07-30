@@ -62,12 +62,12 @@ thead th.colNome { z-index: 5; background: var(--surface-2); }
   border-left: 1px solid var(--border);
 }
 
-.dayHead .dow { display: block; font-size: 9px; color: var(--text-mut); font-weight: 600; text-transform: uppercase; }
-.dayHead .dnum { display: block; font-size: 12px; font-weight: 700; color: var(--text); }
+.dayHead :global(.dow) { display: block; font-size: 9px; color: var(--text-mut); font-weight: 600; text-transform: uppercase; }
+.dayHead :global(.dnum) { display: block; font-size: 12px; font-weight: 700; color: var(--text); }
 .dayHead.weekend { background: var(--weekend-2); }
-.dayHead.weekend .dow, .dayHead.weekend .dnum { color: var(--text-2); }
+.dayHead.weekend :global(.dow), .dayHead.weekend :global(.dnum) { color: var(--text-2); }
 .dayHead.today { background: var(--primary); }
-.dayHead.today .dow, .dayHead.today .dnum { color: #fff; }
+.dayHead.today :global(.dow), .dayHead.today :global(.dnum) { color: #fff; }
 
 tbody tr { transition: background var(--dur) var(--ease); }
 tbody tr:nth-child(even) td.colNome, tbody tr:nth-child(even) td { background: var(--surface-2); }
