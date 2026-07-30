@@ -298,7 +298,23 @@ p.hint.goals-hint { padding: 0 4px; }
 /* Goals table specific */
 .table-wrap.goals-table-wrap .table-wrap { max-height: none; }
 #goalsTableWrap .table-wrap { max-height: none; }
-#goalsTableWrap td.col-nome, #goalsTableWrap th.col-nome { left: 0; white-space: nowrap; min-width: 240px; }
+#goalsTableWrap td.col-nome,
+#goalsTableWrap th.col-nome {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  min-width: 240px;
+  max-width: 240px;
+  padding: 8px 30px 8px 12px;
+  font-size: 12.5px;
+  line-height: 1.35;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  vertical-align: middle;
+}
 
 .goal-value { display: block; width: 100%; padding: 8px 2px; font-size: 12px; color: var(--text); text-align: center; font-variant-numeric: tabular-nums; font-weight: 600; }
 .goal-value.pct-good { color: var(--success-dark); font-weight: 800; }
