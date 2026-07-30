@@ -1,8 +1,7 @@
-import { useMemo, useEffect, useRef } from 'react'
+import { useMemo } from 'react'
 import { useStore, useCurrentRegion, usePeriodKey } from '@/store/useStore'
 import { buildWeeks } from '@/utils/dates'
-import { fmtNum } from '@/utils/formatters'
-import { computeRanking, computeTeamGoalsSummary, computeTeamOverview, getEntry } from '@/services/calculations'
+import { computeRanking, computeTeamGoalsSummary, computeTeamOverview } from '@/services/calculations'
 import KpiCards from './KpiCards'
 import AlertCards from './AlertCards'
 import TechCards from './TechCards'
@@ -25,22 +24,30 @@ export default function DashboardPage() {
   const weeks = useMemo(() => buildWeeks(year, month), [year, month])
 
   const rankingRows = useMemo(
-    () => computeRanking(region, weeks, rankingMode, params.quartil, params.dayMeta, periodKey),
+    () => region ? computeRanking(region, weeks, rankingMode, params.quartil, params.dayMeta, periodKey) : [],
     [region, weeks, rankingMode, params.quartil, params.dayMeta, periodKey]
   )
 
   const goals = useMemo(
-    () => computeTeamGoalsSummary(region, weeks, params.dayMeta, periodKey),
+    () => region ? computeTeamGoalsSummary(region, weeks, params.dayMeta, periodKey)
+      : { pct: null, totalAchieved: 0, totalExpected: 0, totalExpectedPast: 0, businessDays: 0 },
     [region, weeks, params.dayMeta, periodKey]
   )
 
   const overview = useMemo(
-    () => computeTeamOverview(region, weeks, periodKey),
+    () => region ? computeTeamOverview(region, weeks, periodKey)
+      : { techCount: 0, businessDaysCount: 0, totalTechDays: 0, totalJustified: 0, unavailPct: null, justCounts: {}, unproductiveDays: 0, totalTechDaysPast: 0, unproductivePct: null, unproductiveByTech: [], pastBusinessDaysCount: 0 },
     [region, weeks, periodKey]
   )
 
-  if (!region.technicians.length) {
-    return <div className="empty-state">Nenhum técnico cadastrado nesta região ainda.</div>
+  if (!region || !region.technicians.length) {
+    return (
+      <div className="empty-state">
+        {!region
+          ? 'Nenhuma região cadastrada. Adicione uma região para começar.'
+          : 'Nenhum técnico cadastrado nesta região ainda.'}
+      </div>
+    )
   }
 
   return (

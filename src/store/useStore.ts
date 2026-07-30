@@ -41,27 +41,12 @@ export interface ImportReportResult {
 function seedState(): AppState {
   const now = new Date()
   return {
-    currentRegion: 'norte',
+    currentRegion: '',
     currentYear: now.getFullYear(),
     currentMonth: now.getMonth(),
     rankingMode: 'business',
     params: JSON.parse(JSON.stringify(DEFAULT_PARAMS)),
-    regions: {
-      norte: {
-        name: 'REGIÃO NORTE',
-        technicians: [
-          { funci: '18-00009325', nome: 'JOSE DA LUZ PEREIRA VERAS' },
-          { funci: '18-00009190', nome: 'PEDRO RODRIGUES SOARES NETO' },
-          { funci: '18-00009379', nome: 'JOSE ROBERTO SOUSA SILVA' },
-          { funci: '18-00009354', nome: 'JOSE RENNAN LUCAS DE SOUSA' },
-          { funci: '18-00013284', nome: 'SIDNEY DE SOUSA GONCALVES' },
-          { funci: '18-00009356', nome: 'LAERTE DE CARVALHO COSTA' },
-          { funci: '18-00009423', nome: 'JULIO SILVERIO PEREIRA DA SILVA' },
-        ],
-        entries: {},
-        locked: false,
-      },
-    },
+    regions: {},
   }
 }
 
@@ -126,6 +111,7 @@ export const useStore = create<AppState & Actions>((set, get) => {
 
     addTechnician: (funci: string, nome: string) => {
       set((state) => {
+        if (!state.regions[state.currentRegion]) return state
         const region = { ...state.regions[state.currentRegion] }
         region.technicians = [...region.technicians, { funci, nome: nome.toUpperCase() }]
         return { regions: { ...state.regions, [state.currentRegion]: region } }
@@ -135,6 +121,7 @@ export const useStore = create<AppState & Actions>((set, get) => {
 
     removeTechnician: (funci: string) => {
       set((state) => {
+        if (!state.regions[state.currentRegion]) return state
         const region = { ...state.regions[state.currentRegion] }
         region.technicians = region.technicians.filter((t) => t.funci !== funci)
         return { regions: { ...state.regions, [state.currentRegion]: region } }
@@ -144,6 +131,7 @@ export const useStore = create<AppState & Actions>((set, get) => {
 
     setEntry: (funci: string, iso: string, value: number | string | null) => {
       set((state) => {
+        if (!state.regions[state.currentRegion]) return state
         const region = { ...state.regions[state.currentRegion] }
         const pk = periodKey(state.currentYear, state.currentMonth)
 
@@ -179,6 +167,7 @@ export const useStore = create<AppState & Actions>((set, get) => {
 
     toggleLock: () => {
       set((state) => {
+        if (!state.regions[state.currentRegion]) return state
         const region = { ...state.regions[state.currentRegion] }
         region.locked = !region.locked
         return { regions: { ...state.regions, [state.currentRegion]: region } }
@@ -188,6 +177,9 @@ export const useStore = create<AppState & Actions>((set, get) => {
 
     importReport: (data: ArrayBuffer): ImportReportResult => {
       const state = get()
+      if (!state.regions[state.currentRegion]) {
+        return { updatedTechs: 0, newTechs: 0, updatedDays: 0, validRows: 0, skippedRows: 0, bestPeriod: null, regionName: '' }
+      }
       const rawRows = parseWorkbook(data)
       const region = JSON.parse(JSON.stringify(state.regions[state.currentRegion])) as Region
       const result = applyActivityReport(rawRows, region)
@@ -240,7 +232,10 @@ export const useStore = create<AppState & Actions>((set, get) => {
 
     loadInitialState: async () => {
       const persisted = await loadState()
-      if (persisted) {
+      if (persisted && Object.keys(persisted.regions).length > 0) {
+        if (!persisted.regions[persisted.currentRegion]) {
+          persisted.currentRegion = Object.keys(persisted.regions)[0]
+        }
         set(persisted)
       }
     },
@@ -248,6 +243,9 @@ export const useStore = create<AppState & Actions>((set, get) => {
     refreshFromCloud: async () => {
       const fresh = await loadState()
       if (fresh) {
+        if (!fresh.regions[fresh.currentRegion]) {
+          fresh.currentRegion = Object.keys(fresh.regions)[0] || ''
+        }
         set(fresh)
         get().showToast('Dados atualizados da nuvem.')
       } else {
@@ -257,7 +255,7 @@ export const useStore = create<AppState & Actions>((set, get) => {
   }
 })
 
-export function useCurrentRegion(): Region {
+export function useCurrentRegion(): Region | undefined {
   return useStore((s) => s.regions[s.currentRegion])
 }
 

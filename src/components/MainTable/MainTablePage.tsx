@@ -14,10 +14,12 @@ export default function MainTablePage() {
 
   const weeks = useMemo(() => buildWeeks(year, month), [year, month])
 
-  if (!region.technicians.length) {
+  if (!region || !region.technicians.length) {
     return (
       <div className="empty-state">
-        Nenhum técnico cadastrado nesta região ainda.
+        {!region
+          ? 'Nenhuma região cadastrada. Adicione uma região para começar.'
+          : 'Nenhum técnico cadastrado nesta região ainda.'}
       </div>
     )
   }

@@ -5,6 +5,11 @@ import { loadFromFirestore } from './firebase'
 function migrateLoadedState(parsed: AppState): AppState | null {
   if (!parsed || !parsed.regions) return null
 
+  if (parsed.currentRegion && !parsed.regions[parsed.currentRegion]) {
+    const keys = Object.keys(parsed.regions)
+    parsed.currentRegion = keys.length > 0 ? keys[0] : ''
+  }
+
   Object.values(parsed.regions).forEach((r) => {
     if (typeof r.locked !== 'boolean') r.locked = false
     if (!r.slaCounts) r.slaCounts = { evaluated: 0, onTime: 0 }

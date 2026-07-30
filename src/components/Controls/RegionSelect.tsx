@@ -17,6 +17,7 @@ export default function RegionSelect() {
   const handleRemove = () => {
     if (Object.keys(regions).length <= 1) return
     const region = regions[currentRegion]
+    if (!region) return
     if (
       !confirm(
         `Remover a região "${region.name}" e todos os seus dados? Esta ação não pode ser desfeita.`
